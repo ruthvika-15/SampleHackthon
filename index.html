@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FocusFlow — Study Planner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#dashboard"><span class="brand-mark">✦</span><span>focus<span>flow</span></span></a>
+      <button class="new-task sidebar-add" id="openTaskModal"><span>+</span> Add task</button>
+      <nav class="nav" aria-label="Main navigation">
+        <a class="nav-item active" data-view="dashboard" href="#dashboard"><i>▦</i> Dashboard</a>
+        <a class="nav-item" data-view="tasks" href="#tasks"><i>☷</i> My tasks <b id="taskNavCount">0</b></a>
+        <a class="nav-item" data-view="today" href="#today"><i>☀</i> Today <b id="todayNavCount">0</b></a>
+        <a class="nav-item" data-view="calendar" href="#calendar"><i>□</i> Calendar</a>
+        <a class="nav-item" data-view="upcoming" href="#upcoming"><i>◷</i> Upcoming</a>
+        <a class="nav-item" data-view="weekly" href="#weekly"><i>⌁</i> Weekly planner</a>
+        <a class="nav-item" data-view="completed" href="#completed"><i>✓</i> Completed</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="mini-profile"><div class="avatar">R</div><div><strong>Ruthvika</strong><small>Student plan</small></div><button>•••</button></div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="menu-toggle" id="menuToggle">☰</button>
+        <div class="mobile-brand">✦ focus<span>flow</span></div>
+        <div class="top-actions">
+          <label class="search"><span>⌕</span><input id="searchInput" placeholder="Search tasks..." /></label>
+          <button class="icon-button" id="notificationButton" aria-label="Notifications">♢<em id="notificationDot"></em></button>
+          <button class="top-add" id="openTaskModal2">+ <span>Add task</span></button>
+        </div>
+      </header>
+
+      <section class="view active" id="dashboard">
+        <div class="greeting"><div><p class="eyebrow" id="todayDate">MONDAY, MAY 20</p><h1>Good morning, Ruthvika <span>✦</span></h1><p>Here's a clear view of what needs your attention.</p></div><div class="streak">🔥 <strong>4 day</strong> focus streak</div></div>
+        <div class="stats-grid">
+          <article class="stat-card peach"><div class="stat-icon">☀</div><div><span>Due today</span><strong id="dueTodayStat">0</strong><small id="dueTodaySub">Nothing scheduled</small></div><div class="stat-glyph">↗</div></article>
+          <article class="stat-card lavender"><div class="stat-icon">◷</div><div><span>Upcoming</span><strong id="upcomingStat">0</strong><small>Next 7 days</small></div><div class="stat-glyph">→</div></article>
+          <article class="stat-card rose"><div class="stat-icon">!</div><div><span>Overdue</span><strong id="overdueStat">0</strong><small id="overdueSub">You're on track</small></div><div class="stat-glyph">↗</div></article>
+          <article class="stat-card mint"><div class="stat-icon">✓</div><div><span>Completed</span><strong id="completedStat">0</strong><small>This week</small></div><div class="stat-glyph">↗</div></article>
+        </div>
+        <div class="dashboard-grid">
+          <div class="panel today-panel"><div class="panel-head"><div><p class="section-kicker">YOUR DAY</p><h2>Today’s focus</h2></div><a href="#today" data-view="today">View all <span>→</span></a></div><div id="todayTasks" class="task-list"></div><button class="subtle-add" id="quickAddToday">+ Add another task</button></div>
+          <div class="panel progress-panel"><div class="panel-head"><div><p class="section-kicker">DAILY PROGRESS</p><h2>Keep the momentum</h2></div><button class="dots">•••</button></div><div class="progress-ring-wrap"><div class="progress-ring" id="progressRing"><div><strong id="progressPercent">0%</strong><span>complete</span></div></div><div class="progress-copy"><strong id="progressCopy">Ready when you are</strong><p id="progressDetail">Add a task to plan your day.</p></div></div><div class="bar-label"><span>Daily goal</span><strong id="dailyGoalText">0 of 0 tasks</strong></div><div class="progress-bar"><i id="progressBar"></i></div></div>
+          <div class="panel deadlines-panel"><div class="panel-head"><div><p class="section-kicker">COMING UP</p><h2>Deadlines</h2></div><a href="#upcoming" data-view="upcoming">See all <span>→</span></a></div><div id="deadlineList" class="deadline-list"></div></div>
+          <div class="panel workload-panel"><div class="panel-head"><div><p class="section-kicker">THIS WEEK</p><h2>Your workload</h2></div><span class="muted">Hours planned</span></div><div id="workloadChart" class="workload-chart"></div><div class="chart-key"><span><i class="key-dot"></i> Planned</span><strong id="workloadTotal">0h total</strong></div></div>
+        </div>
+      </section>
+
+      <section class="view" id="tasks">
+        <div class="page-heading"><div><p class="eyebrow">ORGANIZE EVERYTHING</p><h1>My tasks</h1><p>Keep your work organized and your mind clear.</p></div><button class="top-add" id="openTaskModal3">+ Add task</button></div>
+        <div class="filters panel"><label class="search wide"><span>⌕</span><input id="taskSearch" placeholder="Search by task name or notes..." /></label><select id="priorityFilter"><option value="all">All priorities</option><option>High</option><option>Medium</option><option>Low</option></select><select id="categoryFilter"><option value="all">All categories</option><option>School</option><option>Work</option><option>Personal</option><option>Health</option></select><select id="statusFilter"><option value="active">Incomplete</option><option value="all">All tasks</option><option value="done">Completed</option></select></div>
+        <div class="panel tasks-table"><div class="table-head"><span>Task</span><span>Due</span><span>Priority</span><span>Category</span><span></span></div><div id="allTasksList"></div></div>
+      </section>
+
+      <section class="view" id="today"><div class="page-heading"><div><p class="eyebrow" id="todayViewDate">TODAY</p><h1>Today’s plan</h1><p>Choose one thing, then give it your full attention.</p></div><button class="top-add" id="openTaskModal4">+ Add task</button></div><div class="today-layout"><div class="panel timeline-panel"><div id="todayTimeline"></div></div><aside class="day-summary panel"><p class="section-kicker">AT A GLANCE</p><h2 id="todayTaskCount">0 tasks planned</h2><div class="summary-line"><span>Estimated time</span><strong id="todayHours">0h 0m</strong></div><div class="summary-line"><span>Completed</span><strong id="todayDone">0 / 0</strong></div><button class="smart-button" id="openSmartModal">✦ Plan a big assignment</button></aside></div></section>
+
+      <section class="view" id="calendar"><div class="page-heading calendar-title"><div><p class="eyebrow">YOUR SCHEDULE</p><h1 id="calendarHeading">May 2024</h1></div><div class="calendar-controls"><button id="prevMonth">←</button><button id="goToday">Today</button><button id="nextMonth">→</button><div class="view-switch"><button class="active" data-calview="month">Month</button><button data-calview="week">Week</button><button data-calview="day">Day</button></div></div></div><div class="calendar-layout"><div class="panel calendar-panel"><div class="calendar-weekdays"><span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span></div><div id="calendarGrid" class="calendar-grid"></div></div><aside class="calendar-side"><div class="panel"><p class="section-kicker">SELECTED DAY</p><h2 id="selectedDayTitle">Today</h2><div id="selectedDayTasks" class="selected-tasks"></div><button class="subtle-add" id="addOnSelected">+ Add task here</button></div><div class="drop-hint">✦ Drag a task onto a day to reschedule it.</div></aside></div></section>
+
+      <section class="view" id="upcoming"><div class="page-heading"><div><p class="eyebrow">LOOKING AHEAD</p><h1>Upcoming deadlines</h1><p>Important dates, sorted so you always know what’s next.</p></div></div><div id="upcomingList" class="upcoming-list"></div></section>
+      <section class="view" id="weekly"><div class="page-heading"><div><p class="eyebrow">WEEKLY RESET</p><h1>This week’s plan</h1><p>Plan intentionally. Make room for what matters.</p></div><button class="top-add" id="openTaskModal5">+ Add task</button></div><div id="weeklyGrid" class="weekly-grid"></div></section>
+      <section class="view" id="completed"><div class="page-heading"><div><p class="eyebrow">CELEBRATE PROGRESS</p><h1>Completed tasks</h1><p>Everything you’ve already made happen.</p></div></div><div class="panel completed-wrap"><div id="completedList" class="task-list"></div></div></section>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="taskModal"><div class="modal"><button class="close-modal">×</button><p class="eyebrow">NEW TASK</p><h2>Add something to your plan</h2><form id="taskForm"><label>Task name<input required name="title" placeholder="e.g. Finish psychology reading" /></label><label>Notes <textarea name="notes" placeholder="Add helpful details, links, or notes..."></textarea></label><div class="form-grid"><label>Due date<input required type="date" name="date" /></label><label>Due time<input type="time" name="time" /></label></div><div class="form-grid"><label>Priority<select name="priority"><option>Medium</option><option>High</option><option>Low</option></select></label><label>Category<select name="category"><option>School</option><option>Work</option><option>Personal</option><option>Health</option></select></label></div><div class="form-grid"><label>Estimated time<select name="estimate"><option value="30">30 minutes</option><option value="60" selected>1 hour</option><option value="90">1.5 hours</option><option value="120">2 hours</option><option value="180">3 hours</option></select></label><label>Reminder<select name="reminder"><option value="">No reminder</option><option value="30">30 min before</option><option value="60">1 hour before</option><option value="1440">1 day before</option><option value="4320">3 days before</option></select></label></div><label class="recurring"><input type="checkbox" name="recurring" /> Repeat weekly</label><button class="submit-task" type="submit">Add to planner <span>→</span></button></form></div></div>
+  <div class="modal-backdrop" id="smartModal"><div class="modal smart-modal"><button class="close-modal">×</button><p class="eyebrow">SMART PLANNING</p><h2>Break down a big assignment</h2><p class="modal-intro">FocusFlow will turn your deadline into manageable steps across the days you have.</p><form id="smartForm"><label>Assignment name<input required name="assignment" placeholder="e.g. History research paper" /></label><div class="form-grid"><label>Due date<input required type="date" name="dueDate" /></label><label>How many steps?<select name="steps"><option value="3">3 steps</option><option value="4" selected>4 steps</option><option value="5">5 steps</option></select></label></div><button class="submit-task" type="submit">Create my plan <span>✦</span></button></form></div></div>
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>
